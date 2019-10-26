@@ -9,9 +9,9 @@ import (
 	"poc_kinder/contract/service"
 )
 
-func ApproveRequest(stub shim.ChaincodeStubInterface, args []string) (string, error) {
+func Approve(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	if len(args) != 2 {
-		return "", fmt.Errorf("Incorrect arguments. Expecting a key and report data")
+		return "", fmt.Errorf("Incorrect arguments. Expecting a key and hospital")
 	}
 
 	var report model.Report
@@ -20,26 +20,27 @@ func ApproveRequest(stub shim.ChaincodeStubInterface, args []string) (string, er
 	if err != nil {
 		return "", err
 	}
-	if !user.IsParent() && !user.IsPediatrician() {
-		return "", errors.New("only parent or hospital worker can approve request")
+	if !user.IsParent() {
+		return "", errors.New("only parent can approve request")
 	}
 
 	err = reportService.FindAndUnmarshal(args[0], &report)
 	if err != nil {
 		return "", err
 	}
-
-	var reportData model.ReportData
-	err = json.Unmarshal([]byte(args[1]), &reportData)
-	if err != nil {
-		return "", err
+	if report.Parent != user.Id {
+		return "", errors.New("only card owner can approve report")
 	}
 
-	reportService.ApproveReport(&report, reportData)
+	report.Approve(args[1])
+
 	jsonBytes, err := json.Marshal(report)
 	if err != nil {
 		return "", fmt.Errorf("Failed to marshall report obj", args[0])
 	}
-
+	err = reportService.Put(args[0], jsonBytes)
+	if err != nil {
+		return "", fmt.Errorf("Failed to put report obj", args[0])
+	}
 	return string(jsonBytes), nil
 }

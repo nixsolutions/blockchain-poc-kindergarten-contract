@@ -1,38 +1,45 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/hyperledger/fabric-chaincode-go/shim"
-	"poc/contract"
+	"poc_kinder/contract/model"
 )
 
 // main function starts up the chaincode in the container during instantiate
 func main() {
-	//vac := []model.VaccinationItem{
-	//	model.VaccinationItem{
-	//		Name: "test1",
-	//		Timestamp: 1111,
-	//	},
-	//	model.VaccinationItem{
-	//		Name: "test2",
-	//		Timestamp: 2222,
-	//	},
-	//}
+	vac := []model.VaccinationItem{
+		model.VaccinationItem{
+			Name: "measles",
+			Timestamp: 1571590625,
+		},
+	}
 	//card := model.Card{
-	//	Name: "Max Pechenin",
+	//	Id: "card-uniq-id",
+	//	Name: "John Doe",
 	//	BirthDate: "1999-05-24",
 	//	Height: 197,
 	//	Weight: 85,
 	//	Vaccination: vac,
-	//	Parents: []string{ "parent-max-1", "parent-max-2"},
+	//	Parents: []model.Parent{ {Id: "parent-1"}, {Id: "parent-2"}},
 	//}
-	//bytes, err := json.Marshal(card)
-	//if err != nil {
-	//	return
-	//}
-	//fmt.Println(string(bytes))
 
-	if err := shim.Start(new(contract.MedicalContract)); err != nil {
-		fmt.Printf("Error starting MedicalContract chaincode: %s", err)
+	report := model.Report{
+		Id: "report-unique-id",
+		Status: "created",
+		CardId: "card-uniq-id",
+		Data: model.ReportData{
+			Name: "John",
+			Surname: "Doe",
+			Vaccination: vac,
+		},
 	}
+	bytes, err := json.Marshal(report)
+	if err != nil {
+		return
+	}
+	fmt.Println(string(bytes))
+	//if err := shim.Start(new(contract.MedicalContract)); err != nil {
+	//	fmt.Printf("Error starting MedicalContract chaincode: %s", err)
+	//}
 }

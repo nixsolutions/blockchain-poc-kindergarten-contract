@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/hyperledger/fabric-chaincode-go/pkg/cid"
 	"github.com/hyperledger/fabric-chaincode-go/shim"
-	"poc/contract/model"
+	"poc_kinder/contract/model"
 )
 
 type AuthService struct {
@@ -25,13 +25,6 @@ func (service *AuthService) GetUser() (*model.User, error) {
 	if err != nil {
 		return nil, err
 	}
-	role, found, err := id.GetAttributeValue("role")
-	if err != nil {
-		return nil, err
-	}
-	if !found {
-		return nil, errors.New("role attr was not found")
-	}
 
 	personId, found, err := id.GetAttributeValue("id")
 	if err != nil {
@@ -41,5 +34,5 @@ func (service *AuthService) GetUser() (*model.User, error) {
 		return nil, errors.New("role attr was not found")
 	}
 
-	return model.NewUser(personId, role, mspid), nil
+	return model.NewUser(personId, mspid), nil
 }

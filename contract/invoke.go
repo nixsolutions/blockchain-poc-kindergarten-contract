@@ -17,14 +17,12 @@ func (t *KinderContract) Invoke(stub shim.ChaincodeStubInterface) peer.Response 
 	var err error
 
 	switch fn {
-	case "requestReport":
-		result, err = report.RequestReport(stub, args)
-	case "getReport":
-		result, err = report.GetReport(stub, args)
+	case "createReport":
+		result, err = report.Create(stub, args)
 	case "getReports":
-		result, err = report.GetReports(stub, args)
-	case "approveRequest":
-		result, err = report.ApproveRequest(stub, args)
+		result, err = report.GetAll(stub, args)
+	case "approveReport":
+		result, err = report.Approve(stub, args)
 	}
 
 	if err != nil {

@@ -6,15 +6,31 @@ import (
 	"poc_kinder/contract/service"
 )
 
-func GetReports(stub shim.ChaincodeStubInterface, args []string) (string, error) {
+func GetAll(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	reportService := service.NewReportService(stub)
-
-	reports, err := reportService.FindAll()
+	user, err := service.NewAuthService(stub).GetUser()
 	if err !=nil {
 		return "", err
 	}
 
-	jsonBytes, err := json.Marshal(reports)
+	var response interface{}
+	if user.IsParent() {
+		response, err = reportService.FindAllForParent(user.Id)
+	}
+
+	if user.IsHospitalWorker() {
+		response, err = reportService.FindAllForDoctor(user.Id)
+	}
+
+	if user.IsKindergartenWorker() {
+		response, err = reportService.FindAllForKindergarten(user.Org)
+	}
+
+	if err !=nil {
+		return "", err
+	}
+
+	jsonBytes, err := json.Marshal(response)
 	if err !=nil {
 		return "", err
 	}
