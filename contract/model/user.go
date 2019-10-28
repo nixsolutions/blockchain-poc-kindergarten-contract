@@ -1,8 +1,8 @@
 package model
 
-const HOSPITAL_ORG = "hospital"
-const PARENTS_ORG = "parents"
-const KINDERGARTEN_ORG = "kindergarten"
+const HOSPITAL_ORG = "HospitalMSP"
+const PARENTS_ORG = "ParentsMSP"
+const KINDERGARTEN_ORG = "KindergartenMSP"
 
 type User struct {
 	Id   string
