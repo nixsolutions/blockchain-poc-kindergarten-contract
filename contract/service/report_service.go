@@ -33,12 +33,12 @@ func (service *ReportService) Put(key string, report []byte) error {
 }
 
 func (service *ReportService) FindAllForParent(parent string) ([]model.Report, error) {
-	queryString := fmt.Sprintf("{\"selector\":{\"parent\":\"%s\"}}", parent)
+	queryString := fmt.Sprintf("{\"selector\":{\"parent_id\":\"%s\"}}", parent)
 	return service.FindReportsByQuery(queryString)
 }
 
 func (service *ReportService) FindAllForDoctor(doctor string) ([]model.Report, error) {
-	queryString := fmt.Sprintf("{\"selector\":{\"doctor\":\"%s\"}}", doctor)
+	queryString := fmt.Sprintf("{\"selector\":{\"doctor_id\":\"%s\"}}", doctor)
 	return service.FindReportsByQuery(queryString)
 }
 
