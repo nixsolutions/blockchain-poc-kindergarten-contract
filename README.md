@@ -9,7 +9,7 @@ There are 2 actors:
 
 ## Purpose
 
-The main purpose of MedicalContract is to store medical reports of children in the blockchain system. There are some rules related to approve and create actions for reports:
+The main purpose of KinderContract is to store medical reports of children in the blockchain system. There are some rules related to approve and create actions for reports:
  - only hospital worker can create report
  - only parent can approve a report
  - kindergarten can read reports after parent's approve
