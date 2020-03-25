@@ -1,5 +1,19 @@
 # KinderContract chaincode(smart contract)
 
+## Actors
+
+There are 2 actors:
+ - Hospital organization
+ - Parent organization
+ - Kindergarten organization
+
+## Purpose
+
+The main purpose of MedicalContract is to store medical reports of children in the blockchain system. There are some rules related to approve and create actions for reports:
+ - only hospital worker can create report
+ - only parent can approve a report
+ - kindergarten can read reports after parent's approve
+
 ## Where to start
 
 Every program in Golang starts with a function main(). You can find main() function in  main.go.
@@ -15,9 +29,9 @@ You can find KinderContract struct and implementation of 2 required methods `Inv
 ## Action handlers
 You can find actions in `contract/action` folder. Just like controllers in web apps with MVC pattern, actions are connectors between business logic layer of smart contract and transport layer.
 There are actions for report:
-- createReport
-- getReport
-- approveReport
+- createReport - hospital worker can create a report for kindergarten
+- getReport - parent, hospital worker and kindergarten can get report from the system
+- approveReport - parent can approve report to get kindergarten access to report.
 
 ## Models
 You can find models in `contract/model` folder. This folder contains entities of smart contract.
