@@ -43,3 +43,5 @@ There are 3 models:
 You can find services in `contract/service` folder. This  folder contains business logic of smart contract
 There are `ReportService` to work with report. `AuthService` is a wrapper to define who invokes the chaincode.
  
+## License
+The project is developed by [NIX Solutions](http://nixsolutions.com) Go team and distributed under [MIT LICENSE](https://github.com/nixsolutions/blockchain-poc-kindergarten-contract/master/LICENSE)
